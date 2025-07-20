@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritik Kumar - Personal Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lenis Smooth Scroll CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Apply the custom font to the body */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f0f0; /* Light background for the track in light mode */
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1a202c; /* Dark background for the track in dark mode */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4fd1c5; /* Teal thumb */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38b2ac; /* Darker teal on hover */
+        }
+        
+        /* Keyframe for fade-in-up animation */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Base state for elements that will be animated on scroll */
+        .scroll-animate {
+            opacity: 0;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        /* The animation class that will be added by JavaScript */
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+
+        /* Delay for sequential animations */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 leading-normal tracking-tight dark:bg-gray-900 dark:text-gray-100">
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-80 backdrop-blur-md shadow-lg dark:bg-gray-900 dark:bg-opacity-80 dark:backdrop-blur-md dark:shadow-lg">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <!-- Logo/Name -->
+            <a href="#home" class="nav-link text-2xl font-bold text-teal-600 hover:text-teal-500 transition-colors duration-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-teal-400 dark:hover:text-teal-300">My Portfolio</a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#home" class="nav-link capitalize text-lg font-medium text-gray-700 hover:text-teal-600 transition-colors duration-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-gray-100 dark:hover:text-teal-400">home</a>
+                <a href="#about" class="nav-link capitalize text-lg font-medium text-gray-700 hover:text-teal-600 transition-colors duration-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-gray-100 dark:hover:text-teal-400">about</a>
+                <a href="#projects" class="nav-link capitalize text-lg font-medium text-gray-700 hover:text-teal-600 transition-colors duration-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-gray-100 dark:hover:text-teal-400">projects</a>
+                <a href="#skills" class="nav-link capitalize text-lg font-medium text-gray-700 hover:text-teal-600 transition-colors duration-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-gray-100 dark:hover:text-teal-400">skills</a>
+                <a href="#timeline" class="nav-link capitalize text-lg font-medium text-gray-700 hover:text-teal-600 transition-colors duration-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-gray-100 dark:hover:text-teal-400">timeline</a>
+                <a href="#contact" class="nav-link capitalize text-lg font-medium text-gray-700 hover:text-teal-600 transition-colors duration-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:text-gray-100 dark:hover:text-teal-400">contact</a>
+            </nav>
+            <!-- Mode Toggle Button -->
+            <button id="mode-toggle" class="text-gray-800 focus:outline-none p-2 rounded-md hover:bg-gray-200 transition-colors duration-300 focus:ring-2 focus:ring-teal-500 ml-4 dark:text-gray-100 dark:hover:bg-gray-700" aria-label="Toggle light/dark mode">
+                <i data-lucide="sun" class="w-7 h-7" id="mode-icon"></i>
+            </button>
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-800 focus:outline-none p-2 rounded-md hover:bg-gray-200 transition-colors duration-300 focus:ring-2 focus:ring-teal-500 dark:text-gray-100 dark:hover:bg-gray-700" aria-label="Toggle mobile menu">
+                    <i data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white bg-opacity-90 shadow-inner dark:bg-gray-900 dark:bg-opacity-90 dark:shadow-inner">
+            <nav class="flex flex-col items-center px-6 pb-4 space-y-4">
+                <a href="#home" class="nav-link capitalize text-lg font-medium hover:text-teal-600 transition-colors duration-300 w-full text-center py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:hover:text-teal-400 dark:hover:bg-gray-800">home</a>
+                <a href="#about" class="nav-link capitalize text-lg font-medium hover:text-teal-600 transition-colors duration-300 w-full text-center py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:hover:text-teal-400 dark:hover:bg-gray-800">about</a>
+                <a href="#projects" class="nav-link capitalize text-lg font-medium hover:text-teal-600 transition-colors duration-300 w-full text-center py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:hover:text-teal-400 dark:hover:bg-gray-800">projects</a>
+                <a href="#skills" class="nav-link capitalize text-lg font-medium hover:text-teal-600 transition-colors duration-300 w-full text-center py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:hover:text-teal-400 dark:hover:bg-gray-800">skills</a>
+                <a href="#timeline" class="nav-link capitalize text-lg font-medium hover:text-teal-600 transition-colors duration-300 w-full text-center py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:hover:text-teal-400 dark:hover:bg-gray-800">timeline</a>
+                <a href="#contact" class="nav-link capitalize text-lg font-medium hover:text-teal-600 transition-colors duration-300 w-full text-center py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:hover:text-teal-400 dark:hover:bg-gray-800">contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 pt-24">
+        <!-- Hero Section -->
+        <section id="home" class="flex flex-col justify-center items-center text-center py-20 md:py-32 min-h-screen">
+            <div class="max-w-4xl">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 scroll-animate">
+                    Hi, I'm <span class="text-teal-600 dark:text-teal-400">Ritik Kr.</span>
+                </h1>
+                <h2 class="text-2xl md:text-4xl text-gray-700 mb-8 scroll-animate delay-100 dark:text-gray-300">
+                    A Passionate Full-Stack Developer
+                </h2>
+                <p class="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto scroll-animate delay-200 dark:text-gray-400">
+                    I specialize in building exceptional, high-quality websites and applications. I'm passionate about clean code, great user experiences, and solving complex problems with elegant solutions.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4 scroll-animate delay-300">
+                    <a href="#contact" class="nav-link bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 flex items-center space-x-2 w-full sm:w-auto justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-teal-500 dark:hover:bg-teal-600">
+                        <span>Get In Touch</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#projects" class="nav-link bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 w-full sm:w-auto justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white">
+                        View My Work
+                    </a>
+                </div>
+                <div class="mt-16 flex justify-center space-x-6 scroll-animate delay-400">
+                    <a href="https://github.com/Ritikkumar07" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-teal-600 transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full p-2 dark:text-gray-400 dark:hover:text-teal-400"><i data-lucide="github" class="w-7 h-7"></i></a>
+                    <a href="https://www.linkedin.com/in/ritik-raj-b9b720292?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BU%2FnkZbPcTCuEB7pblKNEOQ%3D%3D" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-teal-600 transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full p-2 dark:text-gray-400 dark:hover:text-teal-400"><i data-lucide="linkedin" class="w-7 h-7"></i></a>
+                    <a href="https://x.com/RitikRa35628495?t=IabLyFn9icda7-RYLvHq2w&s=09" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:text-teal-600 transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full p-2 dark:text-gray-400 dark:hover:text-teal-400"><i data-lucide="twitter" class="w-7 h-7"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 border-b border-gray-200 dark:border-gray-800">
+            <div class="scroll-animate">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 text-teal-600 dark:text-teal-400">About Me</h2>
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/3 flex justify-center">
+                        <img
+                            src="photo1.jpg"
+                            alt="Ritik Kumar"
+                            class="rounded-full shadow-xl ring-4 ring-teal-500 ring-opacity-50 mx-auto w-64 h-64 md:w-80 md:h-80 object-cover transform hover:scale-105 transition-transform duration-300"
+                            onerror="this.onerror=null;this.src='https://placehold.co/400x400/ffffff/000000?text=Error';"
+                        />
+                    </div>
+                    <div class="md:w-2/3 text-center md:text-left">
+                        <p class="text-lg md:text-xl text-gray-600 mb-6 leading-relaxed dark:text-gray-400">
+                            Hello, I'm Ritik Kumar-
+                             My journey into technology began with a Diploma in Electronic Engineering, which gave me a robust foundation in hardware and circuit-level logic. This experience provided me with a unique, ground-up perspective on how machines operate and interact.</p>
+                        <p class="text-lg md:text-xl text-gray-600 mb-6 leading-relaxed dark:text-gray-400">
+                            This foundation ignited my passion for the software that brings hardware to life, leading me to my current B.Tech in Computer Science. I am now deeply immersed in the world of coding, honing my skills in algorithms, data structures, and object-oriented programming. I am focused on writing clean, efficient code to solve complex problems and am eager to apply my combined expertise to build innovative, user-centric applications.
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20 border-b border-gray-200 dark:border-gray-800">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 text-teal-600 dark:text-teal-400 scroll-animate">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                   <!-- Project Card 1 -->
+                <div class="bg-gray-100 rounded-xl overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 shadow-lg border border-gray-200 dark:bg-gray-800 dark:shadow-xl dark:border-gray-700 scroll-animate delay-200">
+                    <img src="banner11.png" alt="AI Content Generator Project" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/ffffff/000000?text=Error';">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">It's not just a coffee.It's Starbucks</h3>
+                        <p class="text-gray-700 mb-4 text-base dark:text-gray-400">In a world that never stops, we believe in the power of a pause. The perfect cup of coffee isn't just a drink; it's a ritual, a moment of comfort, a personal luxury.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">HTML</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">CSS</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">JavaScript</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">LLM APIs</span>
+                        </div>
+                        <div class="flex space-x-4 mt-4">
+                            <a href="https://5tarbucks.netlify.app/" class="text-teal-600 hover:text-teal-500 font-semibold flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-md p-1 dark:text-teal-400 dark:hover:text-teal-300">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/Ritikkumar07/starbucks" class="text-teal-600 hover:text-teal-500 font-semibold flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-md p-1 dark:text-teal-400 dark:hover:text-teal-300">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                                <span>Source Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <!-- Project Card 2 -->
+                <div class="bg-gray-100 rounded-xl overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 shadow-lg border border-gray-200 dark:bg-gray-800 dark:shadow-xl dark:border-gray-700 scroll-animate">
+                    <img src="space.png" alt="E-commerce Platform Project" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/ffffff/000000?text=Error';">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">🌌 Universe Story Hub</h3>
+                        <p class="text-gray-700 mb-4 text-base dark:text-gray-400"> I created Universe Story Hub to share short, mysterious, and emotional stories set in the vast cosmos.This website is my space to imagine lost civilizations, deep-space signals, and silent stars. Every story here is crafted with wonder and curiosity.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">HTML</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">CSS</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">Firebase</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">JS</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">Stripe API</span>
+                        </div>
+                        <div class="flex space-x-4 mt-4">
+                            <a href="https://ritikkumar07.github.io/Space/" class="text-teal-600 hover:text-teal-500 font-semibold flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-md p-1 dark:text-teal-400 dark:hover:text-teal-300">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="#" class="text-teal-600 hover:text-teal-500 font-semibold flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-md p-1 dark:text-teal-400 dark:hover:text-teal-300">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                                <span>Source Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project Card 3 -->
+                <div class="bg-gray-100 rounded-xl overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 shadow-lg border border-gray-200 dark:bg-gray-800 dark:shadow-xl dark:border-gray-700 scroll-animate delay-100">
+                    <img src="https://placehold.co/600x400/ffffff/000000?text=Task+Management+App" alt="Task Management App Project" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/ffffff/000000?text=Error';">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Collaborative Task Manager</h3>
+                        <p class="text-gray-700 mb-4 text-base dark:text-gray-400">A real-time task management application enabling teams to create, assign, and track tasks efficiently. Features include drag-and-drop interfaces and user roles.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">Vue.js</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">Firebase</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">Tailwind CSS</span>
+                            <span class="bg-teal-100 text-teal-800 text-sm font-semibold px-2.5 py-0.5 rounded-full dark:bg-teal-900 dark:text-teal-300">WebSockets</span>
+                        </div>
+                        <div class="flex space-x-4 mt-4">
+                            <a href="#" class="text-teal-600 hover:text-teal-500 font-semibold flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-md p-1 dark:text-teal-400 dark:hover:text-teal-300">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="#" class="text-teal-600 hover:text-teal-500 font-semibold flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-md p-1 dark:text-teal-400 dark:hover:text-teal-300">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                                <span>Source Code</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+             
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 border-b border-gray-200 dark:border-gray-800">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 text-teal-600 dark:text-teal-400 scroll-animate">Technical Skills</h2>
+            <div class="max-w-5xl mx-auto">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
+                    <!-- Skills are revealed in a staggered way -->
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate">
+                        <i data-lucide="code" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">JavaScript (ES6+)</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate delay-100">
+                        <i data-lucide="react" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">React.js</p>
+                    </div>
+                   
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate delay-300">
+                        <i data-lucide="layout" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">HTML5 & CSS3</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate delay-400">
+                        <i data-lucide="palette" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">Tailwind CSS</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate">
+                        <i data-lucide="server" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">Node.js</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate delay-100">
+                        <i data-lucide="book" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">Python</p>
+                    </div>
+                    
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate delay-300">
+                        <i data-lucide="database" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">MongoDB</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate delay-400">
+                        <i data-lucide="cloud" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">Firebase</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate">
+                        <i data-lucide="git-fork" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">Git & GitHub</p>
+                    </div>
+                    
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center justify-center hover:bg-gray-200 transition-colors duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-800 dark:shadow-lg dark:hover:bg-gray-700 scroll-animate delay-200">
+                        <i data-lucide="cloud-cog" class="w-8 h-8 text-teal-600 mb-2 dark:text-teal-400"></i>
+                        <p class="font-semibold text-lg text-gray-800 dark:text-gray-100">AWS Basics</p>
+                    </div>
+                    
+            </div>
+        </section>
+
+        <!-- Timeline Section (formerly Experience) -->
+        <section id="timeline" class="py-20 border-b border-gray-200 dark:border-gray-800">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 text-teal-600 dark:text-teal-400 scroll-animate">My Timeline</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="relative border-l-4 border-teal-600 dark:border-teal-500 pl-8 md:pl-12">
+                    <!-- Experience Item 1 -->
+                    <div class="mb-12 relative scroll-animate">
+                        <div class="absolute -left-6 md:-left-8 top-0 mt-1.5 w-6 h-6 bg-teal-600 rounded-full border-4 border-white shadow-md dark:bg-teal-500 dark:border-gray-900"></div>
+                        <p class="text-sm text-gray-500 mb-1 font-medium dark:text-gray-400">Sept 2023 - Present</p>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">💻 B.Tech in Computer Science Engineering<span class="text-teal-600 dark:text-teal-400"> @ Lnct Group of College</span></h3>
+                        <p class="text-gray-700 mt-2 leading-relaxed dark:text-gray-300">
+                        “Switched the current from volts to logic — now building the future with code.” </p>
+                        <ul class="list-disc list-inside text-gray-600 mt-3 space-y-1 dark:text-gray-400">
+                            <li>Currently learning core subjects like DSA, DBMS, OS, and Computer Networks.</li>
+                            <li>Gained hands-on experience with Python, React, and full-stack development.</li>
+                            <li>Participating in hackathons and open-source contributions.</li>
+                            <li>Built multiple real-world projects including a portfolio, e-commerce site, and chat app.</li>
+                        </ul>
+                    </div>
+                    <!-- Experience Item 2 -->
+                    <div class="mb-12 relative scroll-animate">
+                        <div class="absolute -left-6 md:-left-8 top-0 mt-1.5 w-6 h-6 bg-teal-600 rounded-full border-4 border-white shadow-md dark:bg-teal-500 dark:border-gray-900"></div>
+                        <p class="text-sm text-gray-500 mb-1 font-medium dark:text-gray-400">2022 June – 2023 May</p>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">🧘 Gap Year<span class="text-teal-600 dark:text-teal-400"> @ Learn and Discover</span></h3>
+                        <p class="text-gray-700 mt-2 leading-relaxed dark:text-gray-300">“Took time to reflect, realign, and discover my true passion — coding.” </p>
+                        <ul class="list-disc list-inside text-gray-600 mt-3 space-y-1 dark:text-gray-400">
+                            <li>Understood the power of tech in solving real-world problems.</li>
+                            <li>Built small projects in HTML, CSS, and JavaScript.</li>
+                            <li>Took a conscious break to explore my interests.</li>
+                            <li>Self-studied basic programming and web development.</li>
+                        </ul>
+                    </div>
+                    <!-- Experience Item 3 -->
+                    <div class="mb-12 relative scroll-animate">
+                        <div class="absolute -left-6 md:-left-8 top-0 mt-1.5 w-6 h-6 bg-teal-600 rounded-full border-4 border-white shadow-md dark:bg-teal-500 dark:border-gray-900"></div>
+                        <p class="text-sm text-gray-500 mb-1 font-medium dark:text-gray-400">🕒 2019 June – 2022 June</p>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white">🎓 Diploma in Electrical Engineering<span class="text-teal-600 dark:text-teal-400"> @ Govt Polytechnic Jamui</span></h3>
+                        <p class="text-gray-700 mt-2 leading-relaxed dark:text-gray-300">“From circuits to systems — my journey began by powering the physical world.”</p>
+                        <ul class="list-disc list-inside text-gray-600 mt-3 space-y-1 dark:text-gray-400">
+                            <li>Learned the foundations of circuits, machines, and power systems</li>
+                            <li>Completed several practical labs and mini-projects in electronics.</li>
+                            <li>Developed strong problem-solving skills with technical depth.</li>
+                            <li>Discovered an interest in automation and embedded systems.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <div class="scroll-animate">
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 text-teal-600 dark:text-teal-400">Get In Touch</h2>
+                <p class="text-xl text-gray-600 text-center max-w-2xl mx-auto mb-12 leading-relaxed dark:text-gray-400">
+                    I'm currently open to new opportunities, exciting collaborations, and engaging projects. Whether you have a challenging idea in mind or just want to connect, feel free to reach out!
+                </p>
+
+                <div class="contact-section">
+                    <div class="max-w-xl mx-auto text-center">
+                        <a href="mailto:ritikraj75471@gmail.com?subject=Inquiry%20from%20Your%20Portfolio&body=Hello%20Ritik,%0D%0A%0D%0AI%20am%20reaching%20out%20regarding%20[Your%20Reason].%0D%0A%0D%0ABest%20regards,%0D%0A[Your%20Name]"
+                            id="sayHelloButton"
+                            class="inline-block bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-8 rounded-lg transition duration-300 text-lg transform hover:scale-105 shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-teal-500 dark:hover:bg-teal-600">
+                            Say Hello
+                        </a>
+                    </div>
+
+                    <div class="mt-8 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <div class="flex items-center space-x-2 text-lg text-gray-700 dark:text-gray-300">
+                            <i data-lucide="mail" class="w-6 h-6 text-teal-600 dark:text-teal-400"></i>
+                            <p>Email me at: <a href="mailto:ritikraj75471@gmail.com" class="hover:text-teal-600 transition-colors duration-300 dark:hover:text-teal-400">ritikraj75471@gmail.com</a></p>
+                        </div>
+                        <!-- Made phone number functional with tel: link -->
+                        <a href="tel:+917258993306" class="flex items-center space-x-2 text-lg text-gray-700 hover:text-teal-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-md p-1 dark:text-gray-300 dark:hover:text-teal-400">
+                            <i data-lucide="phone" class="w-6 h-6 text-teal-600 dark:text-teal-400"></i>
+                            <span>+91 7258993306</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 mt-20 py-8 shadow-sm dark:bg-gray-800 dark:shadow-inner">
+        <div class="container mx-auto px-4 sm:px-6 text-center text-gray-600 dark:text-gray-400">
+            <div class="mb-4 flex justify-center space-x-6">
+                <a href="https://github.com/Ritikkumar07" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full p-2 dark:hover:text-teal-400"><i data-lucide="github" class="w-6 h-6"></i></a>
+                <a href="https://www.linkedin.com/in/ritik-raj-b9b720292?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BzymcTD4KRgmfjXJauB671w%3D%3D" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full p-2 dark:hover:text-teal-400"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                <a href="https://x.com/RitikRa35628495?t=IabLyFn9icda7-RYLvHq2w&s=09" target="_blank" rel="noopener noreferrer" class="hover:text-teal-600 transition-colors duration-300 transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-teal-500 rounded-full p-2 dark:hover:text-teal-400"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+            </div>
+            <p>&copy; 2025  Ritik Kumar. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu, Lucide Icons, and Smooth Scroll -->
+    <script>
+        // Configure Tailwind CSS for dark mode
+        tailwind.config = {
+            darkMode: 'class', // Enable dark mode based on 'dark' class on HTML
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Lucide Icons
+            lucide.createIcons();
+
+            // --- Mobile menu elements and logic ---
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // --- Dark/Light Mode Toggle ---
+            const modeToggleBtn = document.getElementById('mode-toggle');
+            const modeIcon = document.getElementById('mode-icon');
+            const htmlElement = document.documentElement;
+
+            const setTheme = (mode) => {
+                if (mode === 'dark') {
+                    htmlElement.classList.add('dark');
+                    modeIcon.setAttribute('data-lucide', 'moon');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    htmlElement.classList.remove('dark');
+                    modeIcon.setAttribute('data-lucide', 'sun');
+                    localStorage.setItem('theme', 'light');
+                }
+                lucide.createIcons();
+            };
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+
+            modeToggleBtn.addEventListener('click', () => {
+                setTheme(htmlElement.classList.contains('dark') ? 'light' : 'dark');
+            });
+
+            // --- Lenis Smooth Scroll Initialization ---
+            const lenis = new Lenis();
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+            
+            // --- Navigation Link Handling ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const targetId = link.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                         lenis.scrollTo(targetElement, { offset: -document.querySelector('header').offsetHeight });
+                    }
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            // --- Active Nav Link on Scroll ---
+            const sections = document.querySelectorAll('section');
+            const headerHeight = document.querySelector('header').offsetHeight;
+
+            const updateActiveNavLink = () => {
+                let currentActive = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - headerHeight - 20;
+                    if (window.scrollY >= sectionTop) {
+                        currentActive = '#' + section.id;
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('text-teal-600', 'dark:text-teal-400', 'font-bold');
+                    if (link.getAttribute('href') === currentActive) {
+                        link.classList.add('text-teal-600', 'dark:text-teal-400', 'font-bold');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', updateActiveNavLink);
+            lenis.on('scroll', updateActiveNavLink);
+            updateActiveNavLink(); // Initial call
+
+            // --- Intersection Observer for Scroll Animations ---
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add animation classes when element is in view
+                        entry.target.classList.add('animate-fade-in-up');
+                        // Optional: Stop observing the element after it has been animated
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1, // Trigger when 10% of the element is visible
+            });
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
